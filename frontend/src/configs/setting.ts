@@ -1,13 +1,11 @@
 export const setting = {
   app: {
-    name: "Playground",
-    tagline: "Testing Folie Packages Here.",
-    description: "Testing Folie Packages Here.",
+    name: "Coupon",
+    tagline: "Project for submission.",
+    description: "Project for submission.",
   },
 
   header: {
     height: 60,
   },
-
-  home: "/notes",
 };

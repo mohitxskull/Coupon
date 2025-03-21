@@ -4,9 +4,6 @@ import User from '#models/user'
 import { GmailSchema, PasswordSchema } from '#validators/index'
 import hash from '@adonisjs/core/services/hash'
 import vine from '@vinejs/vine'
-import limiter from '@adonisjs/limiter/services/main'
-import mail from '@adonisjs/mail/services/main'
-import EmailVerificationMail from '#mails/email_verification'
 import { handler } from '@folie/castle/helpers'
 import { ProcessingException } from '@folie/castle/exception'
 
@@ -50,35 +47,7 @@ export default class Controller {
     }
 
     if (!user.verifiedAt) {
-      if (!setting.signUp.verification.enabled) {
-        throw new ProcessingException('Email not verified', {
-          source: 'email',
-        })
-      }
-
-      const mailLimiter = limiter.use({
-        requests: 3,
-        duration: '1 hour',
-      })
-
-      const key = `resend_verification_mail_${user.id}`
-
-      const mailRes = await mailLimiter.attempt(key, async () => {
-        return mail.send(new EmailVerificationMail(user))
-      })
-
-      if (!mailRes) {
-        const availableIn = await mailLimiter.availableIn(key)
-
-        throw new ProcessingException(
-          `You have exceeded the rate limit for sending verification emails. Please try again in ${availableIn} seconds.`,
-          {
-            source: 'email',
-          }
-        )
-      }
-
-      throw new ProcessingException("We've sent you an email to verify your account.", {
+      throw new ProcessingException('Email not verified', {
         source: 'email',
       })
     }

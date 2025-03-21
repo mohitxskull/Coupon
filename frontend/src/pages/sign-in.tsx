@@ -79,13 +79,6 @@ export default function Page() {
             <Stack>
               <Title order={2}>Welcome back!</Title>
 
-              <Text size="sm">
-                Don&apos;t have an account?{" "}
-                <Anchor td="underline" href="/sign-up">
-                  Create an account
-                </Anchor>
-              </Text>
-
               <Form mutation={mutation} submit={mutation.mutate} form={form}>
                 {({ dirty, loading }) => (
                   <>

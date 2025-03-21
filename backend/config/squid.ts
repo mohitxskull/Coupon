@@ -10,10 +10,7 @@ export const squid = squidModule.group({
   session: {
     prefixBase: 'ses',
   },
-  note: {
-    prefixBase: 'not',
-  },
-  tag: {
-    prefixBase: 'tag',
+  coupon: {
+    prefixBase: 'cpn',
   },
 })

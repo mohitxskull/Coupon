@@ -1,5 +1,6 @@
 import { setting } from '#config/setting'
 import vine from '@vinejs/vine'
+import { DateTime } from 'luxon'
 
 export const NameSchema = vine.string().minLength(2).maxLength(100)
 
@@ -12,10 +13,18 @@ export const PasswordSchema = vine
   .minLength(setting.passwordRequirement.size.min)
   .maxLength(setting.passwordRequirement.size.max)
 
-export const NoteTitleSchema = vine.string().minLength(1).maxLength(100)
+export const CouponTitleSchema = vine.string().minLength(1).maxLength(20)
 
-export const NoteBodySchema = vine.string().minLength(1).maxLength(10000)
+export const CouponDescriptionSchema = vine.string().minLength(1).maxLength(100)
 
-export const TagNameSchema = vine.string().minLength(1).maxLength(20)
+export const CouponCodeSchema = vine.string().minLength(6).maxLength(10)
 
-export const TagDescriptionSchema = vine.string().minLength(1).maxLength(100)
+export const CouponExpiresAtSchema = vine
+  .date({ formats: ['iso8601'] })
+  .after('today')
+  .nullable()
+  .optional()
+  .transform((value) => {
+    if (!value) return null
+    return DateTime.fromJSDate(value).toUTC()
+  })

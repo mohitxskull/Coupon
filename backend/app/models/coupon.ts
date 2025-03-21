@@ -1,57 +1,63 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { squid } from '#config/squid'
 import cache from '@adonisjs/cache/services/main'
-import User from './user.js'
 import { castle } from '#config/castle'
 import { serializeDT } from '@folie/castle/helpers'
 import { ModelCache } from '@folie/castle'
-import Tag from './tag.js'
 
-export default class Note extends BaseModel {
-  static table = castle.table.note()
+export default class Coupon extends BaseModel {
+  static table = castle.table.coupon()
 
   // Serialize =============================
 
-  static $serialize(row: Note) {
+  static $serialize(row: Coupon) {
     return {
-      id: squid.note.encode(row.id),
+      ...row.$toJSON(),
 
-      userId: squid.user.encode(row.userId),
-      title: row.title,
-      body: row.body,
+      id: squid.coupon.encode(row.id),
 
       createdAt: serializeDT(row.createdAt),
       updatedAt: serializeDT(row.updatedAt),
+      claimedAt: serializeDT(row.claimedAt),
+      expiresAt: serializeDT(row.expiresAt),
     }
   }
 
   $serialize() {
-    return Note.$serialize(this)
+    return Coupon.$serialize(this)
   }
 
   $toJSON() {
     return {
       id: this.id,
 
-      userId: this.userId,
+      isActive: this.isActive,
+
       title: this.title,
-      body: this.body,
+      description: this.description,
+
+      code: this.code,
+
+      claimedBy: this.claimedBy,
+
+      ip: this.ip,
 
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      claimedAt: this.claimedAt,
+      expiresAt: this.expiresAt,
     }
   }
 
   // Cache =============================
 
   static $cache() {
-    return new ModelCache(Note, cache.namespace(this.table))
+    return new ModelCache(Coupon, cache.namespace(this.table), ['metric'])
   }
 
   $cache() {
-    return Note.$cache().row(this)
+    return Coupon.$cache().row(this)
   }
 
   // Columns =============================
@@ -60,13 +66,22 @@ export default class Note extends BaseModel {
   declare id: number
 
   @column()
-  declare userId: number
+  declare isActive: boolean
 
   @column()
   declare title: string
 
   @column()
-  declare body: string
+  declare description: string | null
+
+  @column()
+  declare code: string
+
+  @column()
+  declare ip: string | null
+
+  @column()
+  declare claimedBy: string | null
 
   // DateTime =============================
 
@@ -76,15 +91,15 @@ export default class Note extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
+  @column.dateTime()
+  declare expiresAt: DateTime | null
+
+  @column.dateTime()
+  declare claimedAt: DateTime | null
+
   // Hooks =============================
 
   // Relations =============================
-
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
-
-  @manyToMany(() => Tag, castle.pivot.noteTags)
-  declare tags: ManyToMany<typeof Tag>
 
   // Extra ======================================
 }

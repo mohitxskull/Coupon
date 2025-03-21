@@ -1,20 +1,18 @@
-import { AppLayout } from "@/components/layout/app";
 import { gateServer } from "@/configs/gate_server";
-import { homeCrumbs } from "@/lib/crumbs";
-import { Center, Text } from "@mantine/core";
+import { NextServerError } from "@folie/gate-next";
 
-export const getServerSideProps = gateServer.checkpoint();
+export const getServerSideProps = gateServer.server(
+  () => {
+    throw NextServerError.redirect({
+      destination: "/app/coupons",
+      permanent: true,
+    });
+  },
+  {
+    checkpoint: true,
+  },
+);
 
 export default function Page() {
-  return (
-    <>
-      <AppLayout fullHeight crumbs={homeCrumbs.get()}>
-        <Center h="100%">
-          <Text fs="italic" fw="bold">
-            “Still thinking what to do is a waste of time”
-          </Text>
-        </Center>
-      </AppLayout>
-    </>
-  );
+  return <></>;
 }

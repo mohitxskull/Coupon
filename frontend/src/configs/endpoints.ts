@@ -1,4 +1,4 @@
-import { endpoints as backendEndpoints } from "@folie/playground-backend/blueprint";
+import { endpoints as backendEndpoints } from "@coupon/backend/blueprint";
 
 export const endpoints = {
   ...backendEndpoints,

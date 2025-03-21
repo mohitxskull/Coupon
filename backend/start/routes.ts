@@ -9,7 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import { signInThrottle, signUpThrottle, throttle } from './limiter.js'
+import { claimThrottle, signInThrottle, throttle } from './limiter.js'
 import { ProcessingException } from '@folie/castle/exception'
 
 router
@@ -30,13 +30,7 @@ router
               .post('sign-in', [() => import('#controllers/auth/sign_in_controller')])
               .use([signInThrottle, middleware.captcha()])
 
-            router
-              .post('sign-up', [() => import('#controllers/auth/sign_up_controller')])
-              .use([signUpThrottle, middleware.captcha()])
-
-            router
-              .post('verify', [() => import('#controllers/auth/verify_controller')])
-              .use([middleware.captcha()])
+            router.post('guest', [() => import('#controllers/auth/guest_controller')])
 
             router
               .group(() => {
@@ -56,39 +50,31 @@ router
 
         router
           .group(() => {
-            router.get('', [() => import('#controllers/note/list_controller')])
+            router
+              .group(() => {
+                router.get('', [() => import('#controllers/coupon/list_controller')])
 
-            router.get(':noteId', [() => import('#controllers/note/show_controller')])
+                router.get(':couponId', [() => import('#controllers/coupon/show_controller')])
 
-            router.post('', [() => import('#controllers/note/create_controller')])
+                router.post('', [() => import('#controllers/coupon/create_controller')])
 
-            router.put(':noteId', [() => import('#controllers/note/update_controller')])
+                router.put(':couponId', [() => import('#controllers/coupon/update_controller')])
 
-            router.delete(':noteId', [() => import('#controllers/note/delete_controller')])
+                router.delete(':couponId', [() => import('#controllers/coupon/delete_controller')])
+              })
+              .use(middleware.auth())
 
             router
               .group(() => {
-                router.put(':noteId', [() => import('#controllers/note/tag/update_controller')])
+                router
+                  .post('claim', [() => import('#controllers/coupon/public/claim_controller')])
+                  .use([claimThrottle, middleware.captcha()])
+
+                router.get('', [() => import('#controllers/coupon/public/show_controller')])
               })
-              .prefix('tag')
+              .prefix('public')
           })
-          .prefix('note')
-          .use(middleware.auth())
-
-        router
-          .group(() => {
-            router.get('', [() => import('#controllers/tag/list_controller')])
-
-            router.get(':tagId', [() => import('#controllers/tag/show_controller')])
-
-            router.post('', [() => import('#controllers/tag/create_controller')])
-
-            router.put(':tagId', [() => import('#controllers/tag/update_controller')])
-
-            router.delete(':tagId', [() => import('#controllers/tag/delete_controller')])
-          })
-          .prefix('tag')
-          .use(middleware.auth())
+          .prefix('coupon')
 
         router.get('ping', [() => import('#controllers/ping_controller')])
       })

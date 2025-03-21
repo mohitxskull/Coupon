@@ -1,29 +1,15 @@
 import { CrumbsHolder } from "./helpers/crumbs_holder";
 
-export const homeCrumbs = new CrumbsHolder([
+export const couponCrumbs = new CrumbsHolder([
   {
-    label: "Home",
-    href: "app",
+    label: "Coupon",
+    href: "app/coupons",
   },
 ]);
 
-export const noteCrumbs = homeCrumbs.extend([
+export const settingCrumbs = new CrumbsHolder([
   {
-    label: "Notes",
-    href: "notes",
-  },
-]);
-
-export const tagCrumbs = noteCrumbs.extend([
-  {
-    label: "Tags",
-    href: "",
-  },
-]);
-
-export const settingCrumbs = homeCrumbs.extend([
-  {
-    label: "Settings",
-    href: "settings",
+    label: "Setting",
+    href: "app/settings",
   },
 ]);

@@ -16,7 +16,6 @@ export default defineConfig({
     () => import('@adonisjs/bouncer/commands'),
     () => import('@folie/blueprint/commands'),
     () => import('@adonisjs/cache/commands'),
-    () => import('@adonisjs/mail/commands'),
   ],
 
   /*
@@ -45,7 +44,7 @@ export default defineConfig({
     () => import('@adonisjs/limiter/limiter_provider'),
     () => import('@adonisjs/core/providers/edge_provider'),
     () => import('@adonisjs/cache/cache_provider'),
-    () => import('@adonisjs/mail/mail_provider'),
+    () => import('@adonisjs/lock/lock_provider'),
   ],
 
   /*

@@ -5,11 +5,9 @@ import Session from './session.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import { squid } from '#config/squid'
 import cache from '@adonisjs/cache/services/main'
-import Note from './note.js'
 import { castle } from '#config/castle'
 import { serializeDT } from '@folie/castle/helpers'
 import { ModelCache } from '@folie/castle'
-import Tag from './tag.js'
 
 export default class User extends BaseModel {
   static table = castle.table.user()
@@ -18,12 +16,9 @@ export default class User extends BaseModel {
 
   static $serialize(row: User) {
     return {
+      ...row.$toJSON(),
+
       id: squid.user.encode(row.id),
-
-      firstName: row.firstName,
-      lastName: row.lastName,
-
-      email: row.email,
 
       createdAt: serializeDT(row.createdAt),
       updatedAt: serializeDT(row.updatedAt),
@@ -54,26 +49,11 @@ export default class User extends BaseModel {
   // Cache =============================
 
   static $cache() {
-    return new ModelCache(User, cache.namespace(this.table), ['metric'])
+    return new ModelCache(User, cache.namespace(this.table))
   }
 
   $cache() {
     return User.$cache().row(this)
-  }
-
-  $metric(this: User) {
-    return this.$cache().get({
-      key: 'metric',
-      factory: async () => {
-        const [notes, tags] = await Promise.all([
-          this.related('notes').query().count('* as total'),
-          this.related('tags').query().count('* as total'),
-        ])
-
-        return { notes: notes[0].$extras.total, tags: tags[0].$extras.total }
-      },
-      parser: async (p) => p,
-    })
   }
 
   // Columns =============================
@@ -117,12 +97,6 @@ export default class User extends BaseModel {
 
   @hasMany(() => Session)
   declare sessions: HasMany<typeof Session>
-
-  @hasMany(() => Note)
-  declare notes: HasMany<typeof Note>
-
-  @hasMany(() => Tag)
-  declare tags: HasMany<typeof Tag>
 
   // Extra ======================================
 }

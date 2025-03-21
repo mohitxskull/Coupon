@@ -1,6 +1,5 @@
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
-import mail from '@adonisjs/mail/services/main'
 
 export default class Playground extends BaseCommand {
   static commandName = 'playground'
@@ -12,11 +11,5 @@ export default class Playground extends BaseCommand {
 
   async run() {
     this.logger.info('Welcome to playground!')
-
-    await mail.send((message) => {
-      message.subject('Test mail')
-      message.to('servicexskull@gmail.com')
-      message.text('Test mail')
-    })
   }
 }

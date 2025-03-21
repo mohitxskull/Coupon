@@ -16,11 +16,8 @@ export type V1AuthSignOutRoute = InferController<
 export type V1AuthSignInRoute = InferController<
   (typeof import('../../app/controllers/auth/sign_in_controller.ts'))['default']
 >
-export type V1AuthSignUpRoute = InferController<
-  (typeof import('../../app/controllers/auth/sign_up_controller.ts'))['default']
->
-export type V1AuthVerifyRoute = InferController<
-  (typeof import('../../app/controllers/auth/verify_controller.ts'))['default']
+export type V1AuthGuestRoute = InferController<
+  (typeof import('../../app/controllers/auth/guest_controller.ts'))['default']
 >
 export type V1AuthPasswordUpdateRoute = InferController<
   (typeof import('../../app/controllers/auth/password/update_controller.ts'))['default']
@@ -28,38 +25,26 @@ export type V1AuthPasswordUpdateRoute = InferController<
 export type V1AuthProfileUpdateRoute = InferController<
   (typeof import('../../app/controllers/auth/profile/update_controller.ts'))['default']
 >
-export type V1NoteListRoute = InferController<
-  (typeof import('../../app/controllers/note/list_controller.ts'))['default']
+export type V1CouponListRoute = InferController<
+  (typeof import('../../app/controllers/coupon/list_controller.ts'))['default']
 >
-export type V1NoteShowRoute = InferController<
-  (typeof import('../../app/controllers/note/show_controller.ts'))['default']
+export type V1CouponShowRoute = InferController<
+  (typeof import('../../app/controllers/coupon/show_controller.ts'))['default']
 >
-export type V1NoteCreateRoute = InferController<
-  (typeof import('../../app/controllers/note/create_controller.ts'))['default']
+export type V1CouponCreateRoute = InferController<
+  (typeof import('../../app/controllers/coupon/create_controller.ts'))['default']
 >
-export type V1NoteUpdateRoute = InferController<
-  (typeof import('../../app/controllers/note/update_controller.ts'))['default']
+export type V1CouponUpdateRoute = InferController<
+  (typeof import('../../app/controllers/coupon/update_controller.ts'))['default']
 >
-export type V1NoteDeleteRoute = InferController<
-  (typeof import('../../app/controllers/note/delete_controller.ts'))['default']
+export type V1CouponDeleteRoute = InferController<
+  (typeof import('../../app/controllers/coupon/delete_controller.ts'))['default']
 >
-export type V1NoteTagUpdateRoute = InferController<
-  (typeof import('../../app/controllers/note/tag/update_controller.ts'))['default']
+export type V1CouponPublicClaimRoute = InferController<
+  (typeof import('../../app/controllers/coupon/public/claim_controller.ts'))['default']
 >
-export type V1TagListRoute = InferController<
-  (typeof import('../../app/controllers/tag/list_controller.ts'))['default']
->
-export type V1TagShowRoute = InferController<
-  (typeof import('../../app/controllers/tag/show_controller.ts'))['default']
->
-export type V1TagCreateRoute = InferController<
-  (typeof import('../../app/controllers/tag/create_controller.ts'))['default']
->
-export type V1TagUpdateRoute = InferController<
-  (typeof import('../../app/controllers/tag/update_controller.ts'))['default']
->
-export type V1TagDeleteRoute = InferController<
-  (typeof import('../../app/controllers/tag/delete_controller.ts'))['default']
+export type V1CouponPublicShowRoute = InferController<
+  (typeof import('../../app/controllers/coupon/public/show_controller.ts'))['default']
 >
 export type V1PingRoute = InferController<
   (typeof import('../../app/controllers/ping_controller.ts'))['default']
@@ -81,14 +66,9 @@ export const endpoints = {
     url: '/api/v1/auth/sign-in',
     method: 'POST',
   }),
-  V1_AUTH_SIGN_UP: endpoint<V1AuthSignUpRoute>({
+  V1_AUTH_GUEST: endpoint<V1AuthGuestRoute>({
     form: false,
-    url: '/api/v1/auth/sign-up',
-    method: 'POST',
-  }),
-  V1_AUTH_VERIFY: endpoint<V1AuthVerifyRoute>({
-    form: false,
-    url: '/api/v1/auth/verify',
+    url: '/api/v1/auth/guest',
     method: 'POST',
   }),
   V1_AUTH_PASSWORD_UPDATE: endpoint<V1AuthPasswordUpdateRoute>({
@@ -101,44 +81,40 @@ export const endpoints = {
     url: '/api/v1/auth/profile',
     method: 'PUT',
   }),
-  V1_NOTE_LIST: endpoint<V1NoteListRoute>({ form: false, url: '/api/v1/note', method: 'GET' }),
-  V1_NOTE_SHOW: endpoint<V1NoteShowRoute>({
+  V1_COUPON_LIST: endpoint<V1CouponListRoute>({
     form: false,
-    url: '/api/v1/note/{{ noteId }}',
+    url: '/api/v1/coupon',
     method: 'GET',
   }),
-  V1_NOTE_CREATE: endpoint<V1NoteCreateRoute>({ form: false, url: '/api/v1/note', method: 'POST' }),
-  V1_NOTE_UPDATE: endpoint<V1NoteUpdateRoute>({
+  V1_COUPON_SHOW: endpoint<V1CouponShowRoute>({
     form: false,
-    url: '/api/v1/note/{{ noteId }}',
-    method: 'PUT',
-  }),
-  V1_NOTE_DELETE: endpoint<V1NoteDeleteRoute>({
-    form: false,
-    url: '/api/v1/note/{{ noteId }}',
-    method: 'DELETE',
-  }),
-  V1_NOTE_TAG_UPDATE: endpoint<V1NoteTagUpdateRoute>({
-    form: false,
-    url: '/api/v1/note/tag/{{ noteId }}',
-    method: 'PUT',
-  }),
-  V1_TAG_LIST: endpoint<V1TagListRoute>({ form: false, url: '/api/v1/tag', method: 'GET' }),
-  V1_TAG_SHOW: endpoint<V1TagShowRoute>({
-    form: false,
-    url: '/api/v1/tag/{{ tagId }}',
+    url: '/api/v1/coupon/{{ couponId }}',
     method: 'GET',
   }),
-  V1_TAG_CREATE: endpoint<V1TagCreateRoute>({ form: false, url: '/api/v1/tag', method: 'POST' }),
-  V1_TAG_UPDATE: endpoint<V1TagUpdateRoute>({
+  V1_COUPON_CREATE: endpoint<V1CouponCreateRoute>({
     form: false,
-    url: '/api/v1/tag/{{ tagId }}',
+    url: '/api/v1/coupon',
+    method: 'POST',
+  }),
+  V1_COUPON_UPDATE: endpoint<V1CouponUpdateRoute>({
+    form: false,
+    url: '/api/v1/coupon/{{ couponId }}',
     method: 'PUT',
   }),
-  V1_TAG_DELETE: endpoint<V1TagDeleteRoute>({
+  V1_COUPON_DELETE: endpoint<V1CouponDeleteRoute>({
     form: false,
-    url: '/api/v1/tag/{{ tagId }}',
+    url: '/api/v1/coupon/{{ couponId }}',
     method: 'DELETE',
+  }),
+  V1_COUPON_PUBLIC_CLAIM: endpoint<V1CouponPublicClaimRoute>({
+    form: false,
+    url: '/api/v1/coupon/public/claim',
+    method: 'POST',
+  }),
+  V1_COUPON_PUBLIC_SHOW: endpoint<V1CouponPublicShowRoute>({
+    form: false,
+    url: '/api/v1/coupon/public',
+    method: 'GET',
   }),
   V1_PING: endpoint<V1PingRoute>({ form: false, url: '/api/v1/ping', method: 'GET' }),
 } as const

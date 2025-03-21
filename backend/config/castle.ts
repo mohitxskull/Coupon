@@ -5,14 +5,7 @@ export const castle = new CastleModule({
     table: {
       user: 'users',
       session: 'sessions',
-      note: 'notes',
-      tag: 'tags',
-      noteTags: 'note_tags',
-    },
-    pivot: {
-      noteTags: {
-        pivotTable: (t) => t.noteTags(),
-      },
+      coupon: 'coupons',
     },
   },
 })

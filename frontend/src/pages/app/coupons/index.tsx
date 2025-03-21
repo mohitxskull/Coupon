@@ -8,15 +8,15 @@ import {
   Group,
   Loader,
   Paper,
+  SegmentedControl,
   Space,
   Stack,
   Text,
   TextInput,
   Title,
-  Tooltip,
 } from "@mantine/core";
 import { gateServer } from "@/configs/gate_server";
-import { noteCrumbs } from "@/lib/crumbs";
+import { couponCrumbs } from "@/lib/crumbs";
 import { gateTan } from "@/configs/gate_tan";
 import { For, Show } from "@folie/cobalt/components";
 import { timeAgo } from "@/lib/helpers/date";
@@ -24,11 +24,8 @@ import { PaginationRange } from "@/components/pagination_range";
 import { SimplePagination } from "@/components/simple_pagination";
 import { useRouter } from "next/router";
 import { DotProp } from "@folie/lib";
-import { TagBadge } from "@/components/ui/notes/tag/badge";
-import { IconPlus, IconTagFilled } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 import { ICON_SIZE } from "@folie/cobalt";
-import { TagManageAside } from "@/components/ui/notes/tag/manage";
-import { useState } from "react";
 import { notifications } from "@mantine/notifications";
 
 export const getServerSideProps = gateServer.checkpoint();
@@ -36,10 +33,8 @@ export const getServerSideProps = gateServer.checkpoint();
 export default function Page() {
   const router = useRouter();
 
-  const [tagManageState, setTagManageState] = useState(false);
-
   const { body, query, setBody } = gateTan.useList({
-    endpoint: "V1_NOTE_LIST",
+    endpoint: "V1_COUPON_LIST",
     input: {
       query: {
         page: 1,
@@ -56,62 +51,53 @@ export default function Page() {
   });
 
   const createM = gateTan.useMutation({
-    endpoint: "V1_NOTE_CREATE",
+    endpoint: "V1_COUPON_CREATE",
     onSuccess: (updatedData) => {
       notifications.show({
         message: updatedData.message,
       });
 
-      router.push(`/app/notes/${updatedData.note.id}`);
+      router.push(`/app/coupons/${updatedData.coupon.id}`);
     },
   });
 
   return (
     <>
-      <AppLayout
-        crumbs={noteCrumbs.get()}
-        aside={{
-          state: tagManageState,
-          setState: setTagManageState,
-          children: (
-            <TagManageAside
-              state={tagManageState}
-              setState={setTagManageState}
-            />
-          ),
-        }}
-      >
+      <AppLayout crumbs={couponCrumbs.get()}>
         <Container pt="xl">
           <Stack>
             <Group justify="space-between">
-              <Title>Notes</Title>
+              <Title>Coupons</Title>
 
-              <Group>
-                <Button
-                  leftSection={<IconPlus size={ICON_SIZE.SM} />}
-                  onClick={() => createM.mutate(undefined)}
-                  loading={createM.isPending}
-                >
-                  Create
-                </Button>
-
-                <Tooltip label="Manage Tags" position="bottom-end">
-                  <Button
-                    px="xs"
-                    variant="outline"
-                    onClick={() => setTagManageState(!tagManageState)}
-                  >
-                    <IconTagFilled size={ICON_SIZE.SM} />
-                  </Button>
-                </Tooltip>
-              </Group>
+              <Button
+                leftSection={<IconPlus size={ICON_SIZE.SM} />}
+                onClick={() => createM.mutate(undefined)}
+                loading={createM.isPending}
+              >
+                Create
+              </Button>
             </Group>
+
+            <SegmentedControl
+              data={["Not Claimed", "Claimed"]}
+              value={body.query?.filter?.claimed ? "Claimed" : "Not Claimed"}
+              onChange={(value) => {
+                setBody({
+                  query: {
+                    ...body.query,
+                    filter:
+                      value === "Claimed"
+                        ? { claimed: true }
+                        : { claimed: false },
+                  },
+                });
+              }}
+            />
 
             <TextInput
               minLength={1}
               maxLength={100}
-              description='Use "tag:" to search by tag, or enter keywords to search by note title'
-              placeholder="Search notes..."
+              placeholder="Search coupons..."
               value={DotProp.lookup(body, "query.filter.value", "")}
               onChange={(e) => {
                 const newValue = e.currentTarget.value;
@@ -152,9 +138,9 @@ export default function Page() {
                               );
 
                               if (filterValue !== "") {
-                                return `No notes found for "${filterValue}"`;
+                                return `No coupons found for "${filterValue}"`;
                               } else {
-                                return `"No notes found."`;
+                                return `"No coupons found."`;
                               }
                             })()}
                           </Text>
@@ -169,12 +155,14 @@ export default function Page() {
                             <>
                               <Paper
                                 p="md"
+                                withBorder
                                 onClick={() =>
-                                  router.push(`/app/notes/${note.id}`)
+                                  router.push(`/app/coupons/${note.id}`)
                                 }
                                 style={{
                                   cursor: "pointer",
                                 }}
+                                bg="gray.1"
                               >
                                 <Stack>
                                   <Group justify="space-between">
@@ -188,21 +176,6 @@ export default function Page() {
                                       {timeAgo(note.updatedAt)}
                                     </Text>
                                   </Group>
-
-                                  {note.tags.length > 0 && (
-                                    <Group gap="xs">
-                                      <For each={note.tags}>
-                                        {(tag) => (
-                                          <>
-                                            <TagBadge
-                                              color="dark.9"
-                                              tag={tag}
-                                            />
-                                          </>
-                                        )}
-                                      </For>
-                                    </Group>
-                                  )}
                                 </Stack>
                               </Paper>
                             </>
