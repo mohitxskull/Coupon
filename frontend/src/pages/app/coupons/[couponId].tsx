@@ -29,7 +29,7 @@ export default function Page() {
       <AppLayout
         crumbs={couponCrumbs.get([
           {
-            label: couponQ.data?.coupon.title || "Untitled",
+            label: couponQ.data?.coupon.title || "Loading...",
             href: couponId(),
           },
         ])}

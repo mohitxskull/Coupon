@@ -24,7 +24,7 @@ import { PaginationRange } from "@/components/pagination_range";
 import { SimplePagination } from "@/components/simple_pagination";
 import { useRouter } from "next/router";
 import { DotProp } from "@folie/lib";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconRefresh } from "@tabler/icons-react";
 import { ICON_SIZE } from "@folie/cobalt";
 import { notifications } from "@mantine/notifications";
 
@@ -45,6 +45,7 @@ export default function Page() {
         },
       },
     },
+    refetchInterval: 5000,
     debounce: {
       timeout: 500,
     },
@@ -69,13 +70,24 @@ export default function Page() {
             <Group justify="space-between">
               <Title>Coupons</Title>
 
-              <Button
-                leftSection={<IconPlus size={ICON_SIZE.SM} />}
-                onClick={() => createM.mutate(undefined)}
-                loading={createM.isPending}
-              >
-                Create
-              </Button>
+              <Group>
+                <Button
+                  leftSection={<IconPlus size={ICON_SIZE.SM} />}
+                  onClick={() => createM.mutate(undefined)}
+                  loading={createM.isPending}
+                >
+                  Create
+                </Button>
+
+                <Button
+                  px="xs"
+                  variant="outline"
+                  disabled={query.isFetching}
+                  onClick={() => query.refetch()}
+                >
+                  <IconRefresh size={ICON_SIZE.SM} />
+                </Button>
+              </Group>
             </Group>
 
             <SegmentedControl

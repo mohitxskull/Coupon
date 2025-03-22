@@ -42,6 +42,7 @@ export const AppLayout = (props: Props) => {
 
                         <If
                           isTrue={
+                            props.crumbs?.length === 1 ||
                             crumbIndex !== (props.crumbs?.length ?? 0) - 1
                           }
                         >
@@ -57,6 +58,19 @@ export const AppLayout = (props: Props) => {
             )}
 
             <Group gap="xs">
+              <Button
+                size="sm"
+                fw="500"
+                variant="transparent"
+                px="xs"
+                component={Link}
+                href="https://github.com/mohitxskull/Coupon"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
+              </Button>
+
               <Button
                 size="sm"
                 fw="500"

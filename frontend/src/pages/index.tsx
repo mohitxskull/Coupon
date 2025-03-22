@@ -21,6 +21,15 @@ export default function Page() {
             <Logo size="lg" />
 
             <Group>
+              <Button
+                component={Link}
+                href="https://github.com/mohitxskull/Coupon"
+                variant="transparent"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Github
+              </Button>
               <Button component={Link} href="/sign-in" variant="outline">
                 Sign In
               </Button>
