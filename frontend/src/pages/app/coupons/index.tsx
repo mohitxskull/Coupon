@@ -97,6 +97,7 @@ export default function Page() {
                 setBody({
                   query: {
                     ...body.query,
+                    page: 1,
                     filter:
                       value === "Claimed"
                         ? { claimed: true }
@@ -117,6 +118,7 @@ export default function Page() {
                 setBody({
                   query: {
                     ...body.query,
+                    page: 1,
                     filter: newValue !== "" ? { value: newValue } : undefined,
                   },
                 });
