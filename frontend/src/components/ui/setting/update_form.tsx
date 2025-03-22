@@ -1,7 +1,7 @@
 import { gateTan } from "@/configs/gate_tan";
+import { V1AuthSessionRoute } from "@coupon/backend/blueprint";
 import { HorizontalInput, RightGroup } from "@folie/cobalt/components";
 import { Form } from "@folie/gate-tan/components";
-import { V1AuthSessionRoute } from "@folie/playground-backend/blueprint";
 import { Button, Group, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 

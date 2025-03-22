@@ -18,6 +18,19 @@ export const timeAgo = (date: string | Date | null) => {
   return dayjs(date).fromNow();
 };
 
+export const timeLeft = (date: string | Date | null) => {
+  if (!date) return null;
+
+  const now = dayjs();
+  const expirationDate = dayjs(date);
+
+  if (expirationDate.isBefore(now)) {
+    return "Expired";
+  }
+
+  return expirationDate.fromNow(true);
+};
+
 export const parseDate = (date: string | null) => {
   if (!date) return null;
 

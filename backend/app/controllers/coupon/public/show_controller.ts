@@ -23,10 +23,7 @@ export default class Controller {
       })
     }
 
-    const coupon = await Coupon.query()
-      .where('isActive', true)
-      .andWhere('claimedBy', userId)
-      .first()
+    const coupon = await Coupon.query().where('isActive', true).andWhere('user', userId).first()
 
     if (!coupon) {
       throw new ProcessingException('Coupon not found', {

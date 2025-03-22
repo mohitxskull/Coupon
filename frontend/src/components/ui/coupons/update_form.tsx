@@ -104,7 +104,11 @@ export const CouponUpdateForm = (props: Props) => {
             label="Claimed By"
             readOnly
             variant="unstyled"
-            value={props.coupon.userDetail?.name || props.coupon.user || "-"}
+            value={
+              props.coupon.userDetail?.name
+                ? `${props.coupon.userDetail?.name} ( ${props.coupon.user} )`
+                : props.coupon.user || "-"
+            }
           />
 
           <TextInput

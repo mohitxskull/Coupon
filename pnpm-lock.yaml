@@ -60,8 +60,8 @@ importers:
         specifier: ^0.0.15
         version: 0.0.15(zumuxgordixzrv4aeqoyzgf2am)
       '@folie/gate':
-        specifier: ^0.0.10
-        version: 0.0.10
+        specifier: ^0.0.11
+        version: 0.0.11
       '@folie/lib':
         specifier: ^0.0.6
         version: 0.0.6
@@ -166,14 +166,14 @@ importers:
         specifier: ^0.0.7
         version: 0.0.7(motion@11.18.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@folie/gate':
-        specifier: ^0.0.10
-        version: 0.0.10
+        specifier: ^0.0.11
+        version: 0.0.11
       '@folie/gate-next':
-        specifier: ^0.0.2
-        version: 0.0.2(@folie/gate@0.0.10)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: ^0.0.3
+        version: 0.0.3(@folie/gate@0.0.11)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@folie/gate-tan':
-        specifier: ^0.0.2
-        version: 0.0.2(@folie/gate@0.0.10)(@mantine/form@7.17.2(react@19.0.0))(@tanstack/react-query@5.69.0(react@19.0.0))
+        specifier: ^0.0.3
+        version: 0.0.3(@folie/gate@0.0.11)(@mantine/form@7.17.2(react@19.0.0))(@tanstack/react-query@5.69.0(react@19.0.0))
       '@folie/lib':
         specifier: ^0.0.6
         version: 0.0.6
@@ -737,23 +737,23 @@ packages:
       react: '19'
       react-dom: '19'
 
-  '@folie/gate-next@0.0.2':
-    resolution: {integrity: sha512-c2QArqBRgNFALPn1URuV2tUs85u7o2cr1ZFbVmKF89PyPl1vCxci9Yc+ECcT7Pb5vQNHABLykJyCU806GvK7QA==}
+  '@folie/gate-next@0.0.3':
+    resolution: {integrity: sha512-u3HbaxXE9RrfSK5M2Fyh87OM8LMyY75gBRIUXOqd0U97Ddbq4pdyEQnF2AIa/gqcOzcBHyC1jJ/3eBbnzV4bSw==}
     engines: {node: '>=20.6.0'}
     peerDependencies:
-      '@folie/gate': ^0.0.10
+      '@folie/gate': ^0.0.11
       next: '15'
 
-  '@folie/gate-tan@0.0.2':
-    resolution: {integrity: sha512-dn6hlNq07Qbm3x7Wdb4q8W+w63mgiU7favzjEhw0bFLA+gKSZtGiOINasrNX0SkgVe7oRla2Ol0UYrs9wsEejA==}
+  '@folie/gate-tan@0.0.3':
+    resolution: {integrity: sha512-wmUJKsW+vJJtnSMgfT+g67o3m22xfrypXYgDrePIbgftmzO67c92x2B924C6N9ScN9Ga5XKcPG5HqZsGH447/g==}
     engines: {node: '>=20.6.0'}
     peerDependencies:
-      '@folie/gate': ^0.0.10
+      '@folie/gate': ^0.0.11
       '@mantine/form': ^7.16.1
       '@tanstack/react-query': ^5.52.2
 
-  '@folie/gate@0.0.10':
-    resolution: {integrity: sha512-JVxfjl6HWTq/buPWFbWf59ZZMjNXR0btQH2Nt5527uUtO8xva72V7QtFoOVOiieKfJKza/j3S97un31hCO7vHQ==}
+  '@folie/gate@0.0.11':
+    resolution: {integrity: sha512-rFQYZlaUw/PVILRifKRxTj12508AL71Dw+ZM2qU06K/Hr9XAR0uwU5pmFox7DkDY8kL7iU6J+pLGzTpsDjAt3A==}
     engines: {node: '>=20.6.0'}
 
   '@folie/lib@0.0.5':
@@ -5471,23 +5471,23 @@ snapshots:
     transitivePeerDependencies:
       - '@vinejs/vine'
 
-  '@folie/gate-next@0.0.2(@folie/gate@0.0.10)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@folie/gate-next@0.0.3(@folie/gate@0.0.11)(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@folie/gate': 0.0.10
+      '@folie/gate': 0.0.11
       '@folie/lib': 0.0.6
       cookies-next: 5.1.0(next@15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       next: 15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
       - react
 
-  '@folie/gate-tan@0.0.2(@folie/gate@0.0.10)(@mantine/form@7.17.2(react@19.0.0))(@tanstack/react-query@5.69.0(react@19.0.0))':
+  '@folie/gate-tan@0.0.3(@folie/gate@0.0.11)(@mantine/form@7.17.2(react@19.0.0))(@tanstack/react-query@5.69.0(react@19.0.0))':
     dependencies:
-      '@folie/gate': 0.0.10
+      '@folie/gate': 0.0.11
       '@folie/lib': 0.0.6
       '@mantine/form': 7.17.2(react@19.0.0)
       '@tanstack/react-query': 5.69.0(react@19.0.0)
 
-  '@folie/gate@0.0.10':
+  '@folie/gate@0.0.11':
     dependencies:
       '@folie/lib': 0.0.6
       axios: 1.8.4

@@ -22,5 +22,5 @@ export const signInThrottle = limiter.define('sign-in', (ctx) => {
 })
 
 export const claimThrottle = limiter.define('claim', (ctx) => {
-  return limiter.allowRequests(1).every('1 day').usingKey(`claim_${ctx.request.ip()}`)
+  return limiter.allowRequests(10).every('1 hour').usingKey(`claim_${ctx.request.ip()}`)
 })
