@@ -1,12 +1,19 @@
-import { verifyGuestSession } from '#helpers/guest_session'
+import { decryptGuestSession } from '#helpers/guest_session'
 import Coupon from '#models/coupon'
 import locks from '@adonisjs/lock/services/main'
 import { ProcessingException } from '@folie/castle/exception'
 import { handler } from '@folie/castle/helpers'
 import { getBearerToken } from '@folie/castle/helpers'
 import { pick } from '@folie/lib'
+import vine from '@vinejs/vine'
 
 export default class Controller {
+  input = vine.compile(
+    vine.object({
+      name: vine.string().minLength(2).maxLength(20),
+    })
+  )
+
   handle = handler(async ({ ctx }) => {
     const token = getBearerToken(ctx)
 
@@ -16,9 +23,24 @@ export default class Controller {
       })
     }
 
-    if (!(await verifyGuestSession(token))) {
+    const payload = await ctx.request.validateUsing(this.input)
+
+    const userId = await decryptGuestSession(token)
+
+    if (!userId) {
       throw new ProcessingException('Unauthorized', {
         status: 'UNAUTHORIZED',
+      })
+    }
+
+    const alreadyClaimed = await Coupon.query()
+      .where('isActive', true)
+      .andWhere('user', userId)
+      .first()
+
+    if (alreadyClaimed) {
+      throw new ProcessingException('Coupon already claimed', {
+        status: 'CONFLICT',
       })
     }
 
@@ -27,7 +49,7 @@ export default class Controller {
     const acquired = await lock.acquireImmediately()
 
     if (!acquired) {
-      throw new ProcessingException('', {
+      throw new ProcessingException('Try again later, other users are claiming a coupon', {
         status: 'CONFLICT',
       })
     }
@@ -48,8 +70,11 @@ export default class Controller {
         })
       }
 
-      coupon.claimedBy = token
-      coupon.ip = ctx.request.ip()
+      coupon.user = userId
+      coupon.userIp = ctx.request.ip()
+      coupon.userDetail = {
+        name: payload.name,
+      }
 
       await coupon.save()
 

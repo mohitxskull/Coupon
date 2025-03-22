@@ -1,12 +1,10 @@
 import { Logo } from "@/components/logo";
 import {
-  Anchor,
   Button,
   Card,
   Container,
   PasswordInput,
   Stack,
-  Text,
   TextInput,
   Title,
 } from "@mantine/core";

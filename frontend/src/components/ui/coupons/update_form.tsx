@@ -97,21 +97,21 @@ export const CouponUpdateForm = (props: Props) => {
             label="Claimed At"
             readOnly
             variant="unstyled"
-            value={formatDate(props.coupon.claimedAt) ?? "-"}
+            value={formatDate(props.coupon.claimedAt) || "-"}
           />
 
           <TextInput
             label="Claimed By"
             readOnly
             variant="unstyled"
-            value={props.coupon.claimedBy ?? "-"}
+            value={props.coupon.userDetail?.name || props.coupon.user || "-"}
           />
 
           <TextInput
             label="IP Address"
             readOnly
             variant="unstyled"
-            value={props.coupon.ip ?? "-"}
+            value={props.coupon.userIp || "-"}
           />
         </SimpleGrid>
 

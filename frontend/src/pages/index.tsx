@@ -24,7 +24,7 @@ export default function Page() {
               <Button component={Link} href="/sign-in" variant="outline">
                 Sign In
               </Button>
-              <Button component={Link} href="/coupon">
+              <Button component={Link} href="/coupons">
                 Get Coupon
               </Button>
             </Group>

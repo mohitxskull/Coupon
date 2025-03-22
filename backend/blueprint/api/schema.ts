@@ -16,8 +16,8 @@ export type V1AuthSignOutRoute = InferController<
 export type V1AuthSignInRoute = InferController<
   (typeof import('../../app/controllers/auth/sign_in_controller.ts'))['default']
 >
-export type V1AuthGuestRoute = InferController<
-  (typeof import('../../app/controllers/auth/guest_controller.ts'))['default']
+export type V1AuthSignInGuestRoute = InferController<
+  (typeof import('../../app/controllers/auth/sign_in_guest_controller.ts'))['default']
 >
 export type V1AuthPasswordUpdateRoute = InferController<
   (typeof import('../../app/controllers/auth/password/update_controller.ts'))['default']
@@ -66,9 +66,9 @@ export const endpoints = {
     url: '/api/v1/auth/sign-in',
     method: 'POST',
   }),
-  V1_AUTH_GUEST: endpoint<V1AuthGuestRoute>({
+  V1_AUTH_SIGN_IN_GUEST: endpoint<V1AuthSignInGuestRoute>({
     form: false,
-    url: '/api/v1/auth/guest',
+    url: '/api/v1/auth/sign-in-guest',
     method: 'POST',
   }),
   V1_AUTH_PASSWORD_UPDATE: endpoint<V1AuthPasswordUpdateRoute>({

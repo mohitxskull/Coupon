@@ -16,8 +16,9 @@ export default class extends BaseSchema {
 
       t.string('code').unique().notNullable()
 
-      t.string('claimed_by').unique().nullable()
-      t.string('ip').nullable()
+      t.string('user').unique().nullable()
+      t.string('user_ip').nullable()
+      t.text('user_detail').nullable()
 
       t.timestamp('created_at')
       t.timestamp('updated_at')

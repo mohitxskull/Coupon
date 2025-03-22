@@ -5,6 +5,7 @@ import cache from '@adonisjs/cache/services/main'
 import { castle } from '#config/castle'
 import { serializeDT } from '@folie/castle/helpers'
 import { ModelCache } from '@folie/castle'
+import { JSONColumn } from '@folie/castle/column'
 
 export default class Coupon extends BaseModel {
   static table = castle.table.coupon()
@@ -39,9 +40,9 @@ export default class Coupon extends BaseModel {
 
       code: this.code,
 
-      claimedBy: this.claimedBy,
-
-      ip: this.ip,
+      user: this.user,
+      userIp: this.userIp,
+      userDetail: this.userDetail,
 
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -78,10 +79,15 @@ export default class Coupon extends BaseModel {
   declare code: string
 
   @column()
-  declare ip: string | null
+  declare user: string | null
 
   @column()
-  declare claimedBy: string | null
+  declare userIp: string | null
+
+  @column(JSONColumn())
+  declare userDetail: {
+    name?: string
+  } | null
 
   // DateTime =============================
 

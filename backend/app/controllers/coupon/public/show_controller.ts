@@ -1,4 +1,4 @@
-import { verifyGuestSession } from '#helpers/guest_session'
+import { decryptGuestSession } from '#helpers/guest_session'
 import Coupon from '#models/coupon'
 import { ProcessingException } from '@folie/castle/exception'
 import { handler } from '@folie/castle/helpers'
@@ -15,13 +15,18 @@ export default class Controller {
       })
     }
 
-    if (!(await verifyGuestSession(token))) {
+    const userId = await decryptGuestSession(token)
+
+    if (!userId) {
       throw new ProcessingException('Unauthorized', {
         status: 'UNAUTHORIZED',
       })
     }
 
-    const coupon = await Coupon.query().where('isActive', true).andWhere('claimedBy', token).first()
+    const coupon = await Coupon.query()
+      .where('isActive', true)
+      .andWhere('claimedBy', userId)
+      .first()
 
     if (!coupon) {
       throw new ProcessingException('Coupon not found', {
@@ -29,6 +34,16 @@ export default class Controller {
       })
     }
 
-    return { coupon: pick(coupon.$serialize(), ['code', 'expiresAt', 'title', 'description']) }
+    const serializedCoupon = coupon.$serialize()
+
+    return {
+      coupon: pick({ ...serializedCoupon, name: serializedCoupon.userDetail?.name }, [
+        'code',
+        'expiresAt',
+        'title',
+        'description',
+        'name',
+      ]),
+    }
   })
 }

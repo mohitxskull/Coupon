@@ -30,7 +30,9 @@ router
               .post('sign-in', [() => import('#controllers/auth/sign_in_controller')])
               .use([signInThrottle, middleware.captcha()])
 
-            router.post('guest', [() => import('#controllers/auth/guest_controller')])
+            router.post('sign-in-guest', [
+              () => import('#controllers/auth/sign_in_guest_controller'),
+            ])
 
             router
               .group(() => {
@@ -52,6 +54,16 @@ router
           .group(() => {
             router
               .group(() => {
+                router
+                  .post('claim', [() => import('#controllers/coupon/public/claim_controller')])
+                  .use([claimThrottle, middleware.captcha()])
+
+                router.get('', [() => import('#controllers/coupon/public/show_controller')])
+              })
+              .prefix('public')
+
+            router
+              .group(() => {
                 router.get('', [() => import('#controllers/coupon/list_controller')])
 
                 router.get(':couponId', [() => import('#controllers/coupon/show_controller')])
@@ -63,16 +75,6 @@ router
                 router.delete(':couponId', [() => import('#controllers/coupon/delete_controller')])
               })
               .use(middleware.auth())
-
-            router
-              .group(() => {
-                router
-                  .post('claim', [() => import('#controllers/coupon/public/claim_controller')])
-                  .use([claimThrottle, middleware.captcha()])
-
-                router.get('', [() => import('#controllers/coupon/public/show_controller')])
-              })
-              .prefix('public')
           })
           .prefix('coupon')
 

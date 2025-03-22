@@ -3,7 +3,7 @@ import { createGuestSession } from '#helpers/guest_session'
 
 export default class Controller {
   handle = handler(async () => {
-    const session = createGuestSession()
+    const session = await createGuestSession()
 
     return { session }
   })
