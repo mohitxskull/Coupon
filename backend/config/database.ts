@@ -8,7 +8,7 @@ const dbConfig = defineConfig({
     sqlite: {
       client: 'better-sqlite3',
       connection: {
-        filename: app.tmpPath(`${env.get('NODE_ENV')}_db.sqlite3`),
+        filename: app.tmpPath(`${env.get('APP_NAME')}_${env.get('NODE_ENV')}_db.sqlite3`),
       },
       useNullAsDefault: true,
       migrations: {
@@ -24,7 +24,7 @@ const dbConfig = defineConfig({
         port: env.get('DB_PORT'),
         user: env.get('DB_USER'),
         password: env.get('DB_PASSWORD'),
-        database: 'production',
+        database: `${env.get('APP_NAME')}_production`,
         ssl: env.get('DB_SSL') === false ? undefined : {},
       },
       migrations: {
