@@ -15,7 +15,7 @@ export const PasswordSchema = vine
 
 export const CouponTitleSchema = vine.string().minLength(1).maxLength(20)
 
-export const CouponDescriptionSchema = vine.string().minLength(1).maxLength(100)
+export const CouponDescriptionSchema = vine.string().minLength(1).maxLength(200)
 
 export const CouponCodeSchema = vine.string().minLength(6).maxLength(10)
 

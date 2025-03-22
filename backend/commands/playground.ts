@@ -1,3 +1,4 @@
+import { CouponFactory } from '#database/factories/coupon_factory'
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 
@@ -11,5 +12,9 @@ export default class Playground extends BaseCommand {
 
   async run() {
     this.logger.info('Welcome to playground!')
+
+    await CouponFactory.createMany(15)
+
+    this.logger.info('Coupons created')
   }
 }

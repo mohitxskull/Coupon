@@ -74,7 +74,7 @@ export const CouponUpdateForm = (props: Props) => {
           <Stack gap={0}>
             <Title>{props.coupon.title}</Title>
             {props.coupon.description && (
-              <Text size="sm" c="dimmed">
+              <Text size="sm" c="dimmed" maw={400} lineClamp={2}>
                 {props.coupon.description}
               </Text>
             )}

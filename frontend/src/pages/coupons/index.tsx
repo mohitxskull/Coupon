@@ -28,7 +28,7 @@ export const getServerSideProps = gateServer.checkpoint({
   condition: ({ session }) => {
     return {
       allow: !session,
-      redirect: "/app",
+      redirect: "/app/coupons",
     };
   },
 });

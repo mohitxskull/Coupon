@@ -32,14 +32,14 @@ export default class Controller {
     let listQuery = Coupon.query()
 
     if (payload.query?.filter?.claimed) {
-      listQuery = listQuery.andWhereNotNull('claimedAt')
+      listQuery = listQuery.whereNotNull('claimedAt')
     } else {
-      listQuery = listQuery.andWhereNull('claimedAt')
+      listQuery = listQuery.whereNull('claimedAt')
     }
 
     // Filter by note title if provided
     if (payload.query?.filter?.value) {
-      listQuery = listQuery.andWhereLike('title', `%${payload.query.filter.value}%`)
+      listQuery = listQuery.andWhere('title', 'like', `%${payload.query.filter.value}%`)
     }
 
     // Execute the query and paginate results

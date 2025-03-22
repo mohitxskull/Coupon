@@ -23,7 +23,7 @@ export const getServerSideProps = gateServer.checkpoint({
   condition: ({ session }) => {
     return {
       allow: !session,
-      redirect: "/app",
+      redirect: "/app/coupons",
     };
   },
 });
@@ -54,7 +54,7 @@ export default function Page() {
         message: data.message,
       });
 
-      router.replace("/app");
+      router.replace("/app/coupons");
     },
     mutation: {
       onErrorHook: {

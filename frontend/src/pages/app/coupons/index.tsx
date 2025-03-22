@@ -176,7 +176,7 @@ export default function Page() {
                                 }}
                                 bg="gray.1"
                               >
-                                <Stack>
+                                <Stack gap={0}>
                                   <Group justify="space-between">
                                     <Title order={4} flex={1}>
                                       <Text inherit truncate="end" maw="60%">
@@ -186,6 +186,16 @@ export default function Page() {
 
                                     <Text c="dimmed" size="sm">
                                       {timeAgo(note.updatedAt)}
+                                    </Text>
+                                  </Group>
+
+                                  <Group>
+                                    <Text
+                                      size="sm"
+                                      c={note.isActive ? "teal.5" : "red.5"}
+                                      fw="500"
+                                    >
+                                      {note.isActive ? "Active" : "Not Active"}
                                     </Text>
                                   </Group>
                                 </Stack>
