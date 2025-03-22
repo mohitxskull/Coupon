@@ -13,7 +13,7 @@ export default class Playground extends BaseCommand {
   async run() {
     this.logger.info('Welcome to playground!')
 
-    await CouponFactory.createMany(15)
+    await CouponFactory.createMany(5)
 
     this.logger.info('Coupons created')
   }

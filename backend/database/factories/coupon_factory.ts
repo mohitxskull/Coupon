@@ -9,6 +9,7 @@ export const CouponFactory = factory
       title: faker.lorem.words(2),
       description: faker.lorem.sentences(2),
       code: stringHelpers.random(10),
+      isActive: true,
       expiresAt:
         Math.random() > 0.5
           ? DateTime.now().plus({ days: faker.number.int({ min: 2, max: 15 }) })
